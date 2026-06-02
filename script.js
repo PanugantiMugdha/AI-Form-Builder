@@ -1,0 +1,203 @@
+let formFields = [];
+
+function addField(){
+
+    const label =
+        document.getElementById("fieldLabel").value.trim();
+
+    const type =
+        document.getElementById("fieldType").value;
+
+    const required =
+        document.getElementById("requiredField").checked;
+
+    if(!label){
+        alert("Enter field label");
+        return;
+    }
+
+    formFields.push({
+        label: label.trim(),
+        type,
+        required
+    });
+
+    renderForm();
+
+    document.getElementById("fieldLabel").value="";
+}
+
+function renderForm(){
+
+    const form =
+        document.getElementById("dynamicForm");
+
+    form.innerHTML="";
+
+    formFields.forEach(field=>{
+
+        const label =
+            document.createElement("label");
+
+        label.innerText =
+            field.label;
+
+        form.appendChild(label);
+
+        let input;
+
+        switch(field.type){
+
+            case "textarea":
+                input =
+                    document.createElement("textarea");
+                break;
+
+            case "checkbox":
+                input =
+                    document.createElement("input");
+                input.type="checkbox";
+                break;
+
+            default:
+                input =
+                    document.createElement("input");
+                input.type=field.type;
+        }
+
+        if(field.required){
+            input.required=true;
+        }
+
+        input.name=field.label;
+        input.id = field.label;
+
+        form.appendChild(input);
+
+        form.appendChild(
+            document.createElement("br")
+        );
+    });
+}
+
+function uploadFile(){
+
+    const file =
+        document.getElementById("fileInput").files[0];
+
+    if(!file){
+        alert("Select file");
+        return;
+    }
+
+    const allowed =
+    [
+        "application/pdf",
+        "image/png",
+        "image/jpg",
+        "image/jpeg"
+    ];
+
+    if(!allowed.includes(file.type)){
+
+        document.getElementById(
+            "uploadStatus"
+        ).innerText =
+        "Unsupported file";
+
+        return;
+    }
+
+    document.getElementById(
+        "uploadStatus"
+    ).innerText =
+    "File uploaded successfully";
+}
+
+function saveForm(){
+
+    alert(
+        "Form saved successfully"
+    );
+}
+async function extractData(){
+
+    const file =
+    document.getElementById("fileInput").files[0];
+
+    if(!file){
+        alert("Upload a document first");
+        return;
+    }
+
+    alert(
+        "Simulating AI extraction..."
+    );
+
+    /*
+      For demo:
+      Later replace with actual API
+    */
+
+    const extractedData = {
+
+        "Candidate Name":"John Doe",
+        "Email Address":"john@email.com",
+        "Skills":"React, Node.js, Python",
+        "Years of Experience":"4"
+
+    };
+
+    autofillForm(extractedData);
+}
+function autofillForm(data){
+
+    formFields.forEach(field=>{
+
+        const key = field.label.trim();
+
+        const element =
+        document.getElementById(key);
+
+        if(!element) return;
+
+        const value = data[key];
+
+        if(value !== undefined){
+
+            if(element.type === "checkbox"){
+                element.checked = true;
+            }
+            else{
+                element.value = value;
+                element.style.border =
+                "2px solid green";
+            }
+
+        }
+        else{
+
+            element.style.border =
+            "2px solid red";
+        }
+
+    });
+
+}
+function changeRole(){
+
+    const role =
+    document.getElementById("roleSelect").value;
+
+    const builder =
+    document.getElementById("builderSection");
+
+    if(role === "user"){
+
+        builder.style.display = "none";
+
+    }else{
+
+        builder.style.display = "block";
+    }
+}

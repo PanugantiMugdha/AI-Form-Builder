@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Form Builder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>🤖 AI Powered Form Builder & Document Autofill</h1>
+
+    <div class="role-container">
+
+        <label>Select Role:</label>
+
+        <select id="roleSelect" onchange="changeRole()">
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+        </select>
+
+    </div>
+
+    <div class="container">
+
+        <!-- ADMIN PANEL -->
+
+        <div class="builder" id="builderSection">
+
+            <h2>🛠 Form Builder (Admin)</h2>
+
+            <input
+                type="text"
+                id="fieldLabel"
+                placeholder="Enter Field Label"
+            >
+
+            <select id="fieldType">
+                <option value="text">Single Line Text</option>
+                <option value="textarea">Multi Line Text</option>
+                <option value="number">Number</option>
+                <option value="date">Date</option>
+                <option value="dropdown">Dropdown</option>
+                <option value="checkbox">Checkbox</option>
+            </select>
+
+            <label>
+                <input
+                    type="checkbox"
+                    id="requiredField"
+                >
+                Required Field
+            </label>
+
+            <br><br>
+
+            <button onclick="addField()">
+                ➕ Add Field
+            </button>
+
+            <hr>
+
+            <h3>📄 Upload Document</h3>
+
+            <input
+                type="file"
+                id="fileInput"
+            >
+
+            <button onclick="uploadFile()">
+                Upload
+            </button>
+
+            <p id="uploadStatus"></p>
+
+            <button onclick="extractData()">
+                🤖 Extract & Autofill
+            </button>
+
+        </div>
+
+        <!-- USER PREVIEW -->
+
+        <div class="preview">
+
+            <h2>👤 User Form Preview</h2>
+
+            <form id="dynamicForm"></form>
+
+            <br>
+
+            <button onclick="saveForm()">
+                💾 Save Form
+            </button>
+
+        </div>
+
+    </div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
